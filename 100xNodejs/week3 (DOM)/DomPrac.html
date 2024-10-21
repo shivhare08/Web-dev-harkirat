@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: rgb(129, 107, 107);"> 
+    <div style="margin: 20% 0 0 20%;">
+        <div id="hlo"></div>
+        <h1 id="h">Hlo</h1>
+        <input placeholder="write" type="text">
+        <button onclick="Add(value)">Click me</button>
+    </div>
+</body>
+<script>
+    //let count = 0;
+    let val = 0;
+    function Add(){
+        const Inputvalue = document.querySelector("input");
+        const realValue = Inputvalue.value;
+        const crtElement = document.createElement("h2");
+        
+        //Better represent
+        // let x = "<style color:red;> + ' ' +realValue + ' ' + </style>" 
+        //count = count+1;
+        val = val+1;
+        crtElement.setAttribute("id",val);
+        crtElement.innerHTML = "•" + ' ' + realValue + ' ' + '<button style="background-color:red; color:white" onClick="DeleteItem(' + val + ')">Delete</button>  <button >Change</button>';
+        document.querySelector("#hlo").appendChild(crtElement);
+    }
+
+    function DeleteItem(index){
+        const element = document.getElementById(index);
+        element.parentNode.removeChild(element);
+
+    }
+</script>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #sides{
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        #left{
+            margin-right: 4rem;
+        }
+
+        #lower{
+            margin-top:-7.2rem;
+        }
+
+        #chartUpper{
+            width: 100%;
+            height: 400px;
+            background-color: rgba(16, 184, 221, 0.704);
+            display: none;
+        }
+
+        .trans{
+            transition: 1s;
+
+        }
+
+    </style>
+</head>
+<body>
+    <div id="section">
+        
+        <center>
+            <div id="chartUpper">
+                <center>
+                    <h1>This is Upper seaths</h1>
+                    <h2>Price - 5000 /- <del style="color: red; font-size: 19px;">7000</del></h2>
+                </center>
+            </div>
+            <h1>Book your seat</h1><br><br>
+            <div id="upper">
+                <img src="one.jpg">
+            </div>
+        </center>
+        <div id="sides">
+            <div id="left">
+                <img src="two.jpg">
+            </div>
+            <div id="right">
+                <img src="three.jpg">
+            </div>
+        </div>
+        <center>
+            <div id="lower">
+                <img src="five.jpg">
+            </div>
+        </center>
+    </div>
+
+    <script>
+        const upper = document.getElementById("upper")
+        const exe = document.getElementById("chartUpper")
+        
+        upper.addEventListener("mouseover",()=>{
+            exe.classList.add("trans");
+            exe.style.display = "block";
+            upper.style.display = "none"
+        })
+    </script>
+</body>
+</html>

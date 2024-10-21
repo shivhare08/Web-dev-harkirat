@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+        <h3 id="todo_1">1. Take test</h3>
+        <button onclick="update(1)">Update</button>
+    
+        <h3 id="todo_2">2. Go Out To Eat</h3>
+        <button onclick="update(2)">Update</button>
+   
+    
+    
+    
+</body>
+<script>
+    function update(index){
+        document.getElementById("todo_"+index).innerHTML =" mc"
+        // document.querySelector("h3").innerHTML = "mc"
+        // document.querySelector(".todo_1").innerHTML = "hlo"
+    }
+</script>
+</html>

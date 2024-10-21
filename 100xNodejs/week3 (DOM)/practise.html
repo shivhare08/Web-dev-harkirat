@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="hlo">hii</div>
+
+    <script>
+        const div = document.getElementById('hlo');
+        const newdiv = document.createElement('div');
+        newdiv.innerHTML = "hlo new div";
+        newdiv.setAttribute('id','newId')
+        newdiv.setAttribute('style','background-color: orange')
+        div.appendChild(newdiv);
+    </script>
+</body>
+</html>

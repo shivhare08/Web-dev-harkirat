@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+<!-- for using axios -->
+<script>
+
+    async function signup(){
+        const username = document.getElementById("signup-username").value
+        const password = document.getElementById("signup-password").value
+        
+        await axios.post("http://localhost:2000/registration",{
+            username : username,
+            password : password
+        })
+        alert("you are registrated");
+    }
+
+    async function signin(){
+        const username = document.getElementById("signin-username").value
+        const password = document.getElementById("signin-password").value
+
+        const response = await axios.post("http://localhost:2000/login",{
+            username : username,
+            password : password
+        })
+
+        localStorage.setItem("token",response.data.token);          //inspect krke application pr jao udhr localStorage milega
+        //localStorage.setItem se we stored the things jo hum krte h on website n chize stored hojatin...
+        //("like a variable",real thing jo hme as a response chahiye)
+        alert("login successfully"); 
+    }
+
+    async function getUserInformation(){
+        const response = await axios.get("http://localhost:2000/me",{
+            headers: {
+                token:localStorage.getItem("token")
+            }
+        })
+
+        const info = document.getElementById("information")
+        info.innerHTML = "username" + response.data.username + "password" + response.data.password
+    }
+
+    getUserInformation();
+
+
+    function logout(){
+        localStorage.removeItem("token")
+        alert("logout successfully");
+        document.getElementById("information").innerHTML = ""
+    }
+
+</script>
+</head>
+
+<body>
+    <div class="signup">
+        <h2>Signup</h2>
+        <input id="signup-username" type="text" placeholder="username" name="username">
+        <input id="signup-password" type="password" placeholder="password" name="password">
+
+        <button onclick="signup()">submit</button>
+    </div>
+
+    <div class="signin">
+        <h2>Signin</h2>
+        <input id="signin-username" type="text" placeholder="username" name="username">
+        <input id="signin-password" type="password" placeholder="password" name="password">
+
+        <button onclick="signin()">login</button>
+    </div>
+
+    <div>
+        <h2>User information</h2>
+        <div id="information"></div>
+    </div>
+
+    <button onclick="logout()">Logout</button>
+
+</body>
+</html>

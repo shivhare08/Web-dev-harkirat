@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .x{
+            width: 20%;
+            height: 50px;
+            /* background-color: rgb(55, 213, 241); */
+            border-radius: 10px;
+        }
+        .input{
+            width: 30%;
+            margin-top: 5%;
+        }
+        .btn{
+            color: white;
+            background-color: rgb(106, 212, 106);
+        }
+    </style>
+</head>
+<center>
+    <div class="x">
+        <h1 style="color:rgb(36, 27, 27);">Your <span style="color:rgb(41, 40, 43);">To-Do</span></h1>
+    </div>
+</center>
+<body style="background-color: rgb(133, 125, 125);">
+    <center>
+    <div class="input" style="display: flex;">
+        <input class="form-control" type="text" placeholder="write here">
+        <button class="btn" onclick="addTodo()">Add todo</button>
+    </div>
+    </center>
+</body>
+<script>
+    let counter = 1;
+    function addTodo(){
+        const Inputvalue = document.querySelector("input");
+        const value = Inputvalue.value;
+        const newElement = document.createElement("h2");    //h2 is comming with unique countet code
+        //newElement.setAttribute("id",counter);  //Error derha...element ki id n value ki id me difference h
+        counter = counter+1;
+        newElement.setAttribute("id",counter);  //id is predefined
+        newElement.innerHTML = value + '<button onClick="deleteTodo(' + counter + ')">Delete</button><button onClick="changeTodo('+ counter +')">Change</button>';
+        document.querySelector("body").appendChild(newElement)
+    }
+
+    function deleteTodo(index){
+        const element = document.getElementById(index);     //index - 1 to correct that error
+        element.parentNode.removeChild(element);
+    }
+    function changeTodo(index){
+        
+    }
+</script>
+</html>

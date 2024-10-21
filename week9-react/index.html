@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="buttonParent"></div>
+    <button>click me bhai</button>
+    <!-- this is the example of working of react -->
+
+    <script>
+        let arr = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+        let state = {
+            count : -1,
+            alphabet : ''
+        }
+        
+
+        function onButtonPress(){
+            state.count++;
+            state.alphabet = arr[state.count];
+            //state.count = state.count + 1;
+            if(state.count ==26){           
+            document.getElementById('buttonParent').innerHTML = "limit hogyi bhai";
+            return        }else{
+            buttonComponentRender();
+        }
+            
+        }
+
+        function buttonComponentRender(){
+            document.getElementById('buttonParent').innerHTML = ""; //empty because div khali rhe, yha pe button khali horha n new state ka button aarha
+            const component = buttonComponent(state.count , state.alphabet); //yha se button lekr aayega
+            document.getElementById('buttonParent').appendChild(component.button);
+            document.getElementById('buttonParent').appendChild(component.alphabet);
+        }
+
+        function buttonComponent(count , alpha){
+            const button = document.createElement('button');
+            const alphabet = document.createElement('h2');
+            button.innerHTML = `button ${count + 1}`;   //array ke vjha se 1 extra
+            alphabet.innerHTML = `alphabet = > ${alpha}`
+            const value = {
+                button : button,
+                alphabet : alphabet,
+            }
+            // button.setAttribute('onclick','onButtonPress()');
+            button.addEventListener('click',()=>{
+                onButtonPress();    //esa isiliye jisse click krne pr frse process shuru hoo
+            })
+            return value;
+        }
+
+        onButtonPress();
+    </script>
+</body>
+</html>

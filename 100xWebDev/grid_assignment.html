@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .parent {
+            width: 1000px;
+            height: 300px;
+            background-color: rgb(0, 0, 0);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            gap: 10px;
+        }
+
+        .left {
+            background-color: burlywood;
+            text-align: center;
+        }
+
+        .left h5 {
+            justify-content: center;
+            padding: 0 20px 0 20px;
+        }
+
+        .right {
+            background-color: orangered;
+            padding-top: 18px;
+        }
+
+        .rparent {
+            /* display: flex; */
+            /* justify-content: space-around; */
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent">
+        <div class="left">
+            <h1>left</h1>
+            <h5>Hi this is shashank from gwalioire and im creatring a website for you huys</h5>
+        </div>
+
+
+        <div class="right">
+            <div class="rparent">
+                <h2>col1</h2>
+                <h2>col2</h2>
+                <h2>col3</h2>
+                <h2>col1</h2>
+                <h2>col2</h2>
+                <h2>col3</h2>
+                <h2>col1</h2>
+                <h2>col2</h2>
+                <h2>col3</h2>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

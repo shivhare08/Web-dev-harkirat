@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    button {
+        height: 30px;
+        margin: 14px;
+    }
+</style>
+
+<body>
+    <h1>Todo List</h1>
+
+        <h3>1. Take test</h3>
+        <h3>2. Go Out To Eat</h3>
+
+    <br><br>
+    <div>
+        <input placeholder="Write todo" type="text">
+        <button onclick="Add()">Add Todo</button>
+    </div>
+
+</body>
+<script>
+    function Add() {
+        const element = document.createElement("div").innerHTML = "3. Sleeping"
+        const parentel = document.querySelector("body");
+        parentel.appendChild(element)
+        //let operation = document.querySelector("h3").innerHTML = "3. Sleeping";
+        
+    }
+</script>
+
+</html>

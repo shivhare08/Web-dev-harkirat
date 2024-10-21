@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <script src="AdvanceDOM.js"></script>
+    <style>
+        .setAt{
+            color: white;
+            font-family: serif;
+        }
+    </style>
+</head> 
+<body style="background-color: rgb(0, 0, 0);">
+    <div>
+        <input id="in" type="text" placeholder="write here">
+        <!-- /<textarea cols="20" rows="6" placeholder="write something"></textarea> -->
+        
+        <button onclick="addTodo()">click me</button>
+        <button onclick="deleteLastTodo()">deleteLastTodo</button>
+        <button onclick="deleteFirstTodo()">deleteFirstTodo</button>
+
+    </div>
+    <div id="data"></div>
+</body>
+</html>
