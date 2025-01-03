@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+
 //function ke andr hi use state work krrha h
 //const [state , changeState] = useState(0);
 function Counter() {
@@ -32,9 +33,11 @@ function Counter() {
 
 // TODO APP
 function Component() {
-  const [todo, changeTodo] = useState([
-    { title: "z", des: "x" }
-  ]);
+  const [todo, changeTodo] = useState(
+    [
+      { title: "z", des: "x" }
+    ]
+  );
 
   function TodoData(props) {
     console.log(props.title);
@@ -82,6 +85,7 @@ export default function App() {
     <>
       <Counter></Counter>
       <Component></Component>
+      <Condition></Condition>
     </>
 
     //ek trha se ye function h or ye counter function ne return kiya
@@ -90,3 +94,14 @@ export default function App() {
 }
 
 
+let x = true;
+function Condition(){
+  
+  return (
+    <>
+      <div>
+        {(!x)?<h2>hlo div</h2>:<h2>bye div</h2>}
+      </div>
+    </>
+  )
+}

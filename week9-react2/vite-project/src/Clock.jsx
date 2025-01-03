@@ -29,10 +29,11 @@ function Component(){
             clearInterval(clock)
         }
     },[])   //dependency array
-
-
+    
 
     
+
+
     function counting(){
         //changeCount(count => count+1) == count as a parameter and and we are returining count + 1
         //      or
