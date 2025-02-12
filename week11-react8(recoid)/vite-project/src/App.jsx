@@ -1,35 +1,66 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { RecoilRoot, useRecoilValue, atom , useSetRecoilState } from 'recoil'
+//import { counterAtom } from './store/atoms/counter'
 
-function App() {
-  const [count, setCount] = useState(0)
+        //or
 
-  return (
+const counterAtom = atom({
+  default : 0,
+  key : "counter"
+})
+//////////////////////////////////////////
+export default function App(){
+  
+  return(
+    <RecoilRoot>
+      <Counter/>
+    </RecoilRoot>
+  )
+}
+
+
+function Counter(){
+  return(
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <CurrentCount/>
+      <Increment/>
+      <Decrement/>
     </>
   )
 }
 
-export default App
+function CurrentCount(){
+  const count = useRecoilValue(counterAtom) //this is like a getter method
+  return(
+    <>
+      <h2>{count}</h2>
+    </>
+  )
+}
+
+function Increment(){
+  const setCount = useSetRecoilState(counterAtom) //it is like setter method
+
+  function increase(){
+    setCount(c => c+1)
+  }
+  return(
+    <>
+      <button onClick={increase}>Increment</button>
+    </>
+  )
+}
+
+
+function Decrement(){
+  const setCount = useSetRecoilState(counterAtom) //it is like setter method
+
+  function decrease(){
+    setCount(c => c-1)
+  }
+  return(
+    <>
+      <button onClick={decrease}>Decrement</button>
+    </>
+  )
+}
+

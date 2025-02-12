@@ -9,6 +9,7 @@ import UseReference from './UseReference.jsx'
 import Parent from './RollingUp.jsx'
 import ContextApi from './ContextApi.jsx'
 import RecoilLib from './RecoilLib.jsx'
+import ContextApi1 from './ContextApi-1.jsx'
 
 createRoot(document.getElementById('root')).render(
   <>
@@ -20,6 +21,7 @@ createRoot(document.getElementById('root')).render(
     {/* <UseReference/> */}
     {/* <Parent/> */}
     {/* <ContextApi/> */}
-    <RecoilLib/>
+    {/* <RecoilLib/> */}
+    <ContextApi1/>
   </>
 )
