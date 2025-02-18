@@ -20,10 +20,17 @@ const config_1 = require("./config");
 const middleware_1 = require("./middleware");
 const zod_1 = __importDefault(require("zod"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const config_2 = require("./config");
+const util_1 = require("./util");
+function connectDB() {
+    // mongoose.connect("mongodb+srv://shashankismylife08:g9ymekSSe4H5Xmq1@cluster0.f3kq8.mongodb.net/brain-app")
+    mongoose_1.default.connect(config_2.local_url);
+}
+connectDB();
 const app = (0, express_1.default)();
 const port = 2560;
 app.use(express_1.default.json());
-app.post("/api/v1/sighup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("/api/v1/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const username = req.body.username;
     const password = req.body.password;
     try {
@@ -58,7 +65,7 @@ app.post("/api/v1/sighup", (req, res) => __awaiter(void 0, void 0, void 0, funct
         });
     }
 }));
-app.post("/api/v1/sighin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("/api/v1/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const username = req.body.username;
     const password = req.body.password;
     try {
@@ -97,10 +104,10 @@ app.post("/api/v1/sighin", (req, res) => __awaiter(void 0, void 0, void 0, funct
 }));
 app.post("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const link = req.body.link;
-    const type = req.body.type;
+    const title = req.body.title;
     const contactCreate = yield database_1.contentModel.create({
         link: link,
-        type: type,
+        title: title,
         tags: [],
         //@ts-ignore
         userId: req.id
@@ -132,11 +139,61 @@ app.delete("/api/v1/content", middleware_1.userMiddleware, (req, res) => __await
         message: "content deleted"
     });
 }));
-// app.post("/api/v1/brain/:sharelink",(req,res)=>{
-// })
-function connectDB() {
-    // mongoose.connect("mongodb+srv://shashankismylife08:g9ymekSSe4H5Xmq1@cluster0.f3kq8.mongodb.net/brain-app")
-    mongoose_1.default.connect("mongodb+srv://shivhares2002:mww8frbY4dnHF92a@cluster0.gq0hu.mongodb.net/brain-app");
-}
-connectDB();
+app.post("/api/v1/share/brain", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.id;
+    const existingLink = yield database_1.linkModel.findOne({
+        userId: userId
+    });
+    if (existingLink) {
+        res.json({
+            message: "the link is already exist",
+            hash: existingLink.hash
+        });
+        return;
+    }
+    const hash = (0, util_1.random_Link_Generator_Function)(12);
+    yield database_1.linkModel.create({
+        hash: hash,
+        userId: req.id
+    });
+    res.json({
+        link: hash,
+    });
+}));
+app.get("/api/v1/share/brain/:sharelink", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const hash = req.params.sharelink;
+    const share = req.body.share;
+    if (share) {
+        const findingKey = yield database_1.linkModel.findOne({
+            hash: hash
+        });
+        if (!findingKey) {
+            res.json({
+                message: "wrong link"
+            });
+            return;
+        }
+        const userId = findingKey.userId;
+        const userdata = yield database_1.userModel.findOne({
+            _id: userId
+        });
+        const userContent = yield database_1.contentModel.findOne({
+            userId: userId
+        });
+        if (!userContent) {
+            res.json({
+                message: "content is not found"
+            });
+            return;
+        }
+        res.json({
+            message: "user content",
+            content: {
+                username: userdata === null || userdata === void 0 ? void 0 : userdata.username,
+                title: userContent.title,
+                link: userContent.link
+            }
+        });
+    }
+}));
 app.listen(port);

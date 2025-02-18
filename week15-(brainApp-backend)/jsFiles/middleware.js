@@ -11,7 +11,8 @@ const userMiddleware = (req, res, next) => {
     //const token = req.headers.["authorization"];
     const userVerification = jsonwebtoken_1.default.verify(token, config_1.jwt_screats);
     if (userVerification) {
-        //@ts-ignore
+        //@ts-ignore no need
+        // req.id = userVerification.id;
         req.id = userVerification.id;
         next();
     }

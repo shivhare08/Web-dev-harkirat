@@ -1,18 +1,34 @@
 import express from "express";
 import mongoose from "mongoose";
 import jwt from 'jsonwebtoken';
-import { userModel  , contentModel} from "./database";
+import { userModel  , contentModel, linkModel} from "./database";
 import { jwt_screats } from "./config";
 import { userMiddleware } from "./middleware";
 import zod from 'zod';
 import bcrypt from 'bcrypt';
 import { local_url } from "./config";
+import { random_Link_Generator_Function } from "./util";
+
+declare global{
+    namespace Express{
+        export interface Request{
+            id?:String
+        }
+    }
+}
+
+function connectDB(){
+    // mongoose.connect("mongodb+srv://shashankismylife08:g9ymekSSe4H5Xmq1@cluster0.f3kq8.mongodb.net/brain-app")
+    mongoose.connect(local_url);
+}
+
+connectDB();
 
 const app = express();
 const port = 2560;
 app.use(express.json());
 
-app.post("/api/v1/sighup",async (req,res)=>{
+app.post("/api/v1/signup",async (req,res)=>{
     const username = req.body.username;
     const password = req.body.password
     try{   
@@ -48,7 +64,7 @@ app.post("/api/v1/sighup",async (req,res)=>{
     }
 })
 
-app.post("/api/v1/sighin",async (req,res)=>{
+app.post("/api/v1/signin",async (req,res)=>{
     const username = req.body.username;
     const password = req.body.password
     
@@ -89,10 +105,10 @@ app.post("/api/v1/sighin",async (req,res)=>{
 
 app.post("/api/v1/content",userMiddleware,async (req,res)=>{
     const link = req.body.link
-    const type = req.body.type
+    const title = req.body.title
     const contactCreate = await contentModel.create({
         link : link,
-        type : type,
+        title : title,
         tags : [],
         //@ts-ignore
         userId : req.id
@@ -128,14 +144,71 @@ app.delete("/api/v1/content",userMiddleware,async (req,res)=>{
     })
 })
 
-// app.post("/api/v1/brain/:sharelink",(req,res)=>{
-    
-// })
+app.post("/api/v1/share/brain",userMiddleware,async (req,res)=>{
+    const userId = req.id
+    const existingLink = await linkModel.findOne({
+        userId : userId
+    })
 
-function connectDB(){
-    // mongoose.connect("mongodb+srv://shashankismylife08:g9ymekSSe4H5Xmq1@cluster0.f3kq8.mongodb.net/brain-app")
-    mongoose.connect(local_url);
-}
+    if(existingLink){
+        res.json({
+            message : "the link is already exist",
+            hash : existingLink.hash
+        })
+        return
+    }
 
-connectDB();
+    const hash = random_Link_Generator_Function(12);
+    await linkModel.create({
+        hash : hash,
+        userId : req.id
+    })
+    res.json({
+        link:hash,
+    })
+})
+
+app.get("/api/v1/share/brain/:sharelink",async (req,res)=>{
+    const hash = req.params.sharelink;
+    const share = req.body.share;
+
+    if(share){
+        const findingKey = await linkModel.findOne({
+            hash : hash
+        })
+
+        if(!findingKey){
+            res.json({
+                message : "wrong link"
+            })
+            return;
+        }
+        const userId = findingKey.userId;
+
+        const userdata = await userModel.findOne({
+            _id : userId
+        })
+
+        const userContent = await contentModel.findOne({
+            userId : userId
+        })
+
+        if(!userContent){
+            res.json({
+                message : "content is not found"
+            })
+            return;
+        }
+        res.json({
+            message : "user content",
+            content : {
+                username : userdata?.username,
+                title : userContent.title,
+                link : userContent.link
+            }
+        })
+
+    }
+})
+
 app.listen(port);
