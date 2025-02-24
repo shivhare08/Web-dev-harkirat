@@ -1,13 +1,22 @@
 import express from "express";
 import mongoose from "mongoose";
 import jwt from 'jsonwebtoken';
-import { userModel  , contentModel, linkModel} from "./database";
+import userModel from "./database";
+import {  contentModel, linkModel} from "./database";
 import { jwt_screats } from "./config";
 import { userMiddleware } from "./middleware";
 import zod from 'zod';
 import bcrypt from 'bcrypt';
 import { local_url } from "./config";
 import { random_Link_Generator_Function } from "./util";
+import cors from "cors";
+
+
+const app = express();
+
+app.use(cors())
+const port = 2560;
+app.use(express.json());
 
 declare global{
     namespace Express{
@@ -24,9 +33,7 @@ function connectDB(){
 
 connectDB();
 
-const app = express();
-const port = 2560;
-app.use(express.json());
+
 
 app.post("/api/v1/signup",async (req,res)=>{
     const username = req.body.username;
@@ -106,10 +113,12 @@ app.post("/api/v1/signin",async (req,res)=>{
 app.post("/api/v1/content",userMiddleware,async (req,res)=>{
     const link = req.body.link
     const title = req.body.title
+    const type = req.body.type
     const contactCreate = await contentModel.create({
         link : link,
         title : title,
-        tags : [],
+        type : type,
+        // tags : [],
         //@ts-ignore
         userId : req.id
     })

@@ -15,21 +15,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const database_1 = require("./database");
+const database_1 = __importDefault(require("./database"));
+const database_2 = require("./database");
 const config_1 = require("./config");
 const middleware_1 = require("./middleware");
 const zod_1 = __importDefault(require("zod"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const config_2 = require("./config");
 const util_1 = require("./util");
+const cors_1 = __importDefault(require("cors"));
+const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
+const port = 2560;
+app.use(express_1.default.json());
 function connectDB() {
     // mongoose.connect("mongodb+srv://shashankismylife08:g9ymekSSe4H5Xmq1@cluster0.f3kq8.mongodb.net/brain-app")
     mongoose_1.default.connect(config_2.local_url);
 }
 connectDB();
-const app = (0, express_1.default)();
-const port = 2560;
-app.use(express_1.default.json());
 app.post("/api/v1/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const username = req.body.username;
     const password = req.body.password;
@@ -41,7 +44,7 @@ app.post("/api/v1/signup", (req, res) => __awaiter(void 0, void 0, void 0, funct
         const parseData = zodVerification.safeParse(req.body);
         if (parseData.success) {
             const hashPassword = yield bcrypt_1.default.hash(password, 8);
-            const createData = yield database_1.userModel.create({
+            const createData = yield database_1.default.create({
                 username: username,
                 password: hashPassword
             });
@@ -69,7 +72,7 @@ app.post("/api/v1/signin", (req, res) => __awaiter(void 0, void 0, void 0, funct
     const username = req.body.username;
     const password = req.body.password;
     try {
-        const isusernameMatch = yield database_1.userModel.findOne({ username: username });
+        const isusernameMatch = yield database_1.default.findOne({ username: username });
         if (!isusernameMatch) {
             res.json({
                 success: "false",
@@ -105,10 +108,12 @@ app.post("/api/v1/signin", (req, res) => __awaiter(void 0, void 0, void 0, funct
 app.post("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const link = req.body.link;
     const title = req.body.title;
-    const contactCreate = yield database_1.contentModel.create({
+    const type = req.body.type;
+    const contactCreate = yield database_2.contentModel.create({
         link: link,
         title: title,
-        tags: [],
+        type: type,
+        // tags : [],
         //@ts-ignore
         userId: req.id
     });
@@ -117,7 +122,7 @@ app.post("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter
     });
 }));
 app.get("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const UserContent = yield database_1.contentModel.find({
+    const UserContent = yield database_2.contentModel.find({
         //@ts-ignore
         userId: req.id
     }).populate('userId', 'username');
@@ -130,7 +135,7 @@ app.get("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(
 }));
 app.delete("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const contentId = req.body.contentId;
-    yield database_1.contentModel.deleteMany({
+    yield database_2.contentModel.deleteMany({
         contentId,
         //@ts-ignore
         userId: req.id
@@ -141,7 +146,7 @@ app.delete("/api/v1/content", middleware_1.userMiddleware, (req, res) => __await
 }));
 app.post("/api/v1/share/brain", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.id;
-    const existingLink = yield database_1.linkModel.findOne({
+    const existingLink = yield database_2.linkModel.findOne({
         userId: userId
     });
     if (existingLink) {
@@ -152,7 +157,7 @@ app.post("/api/v1/share/brain", middleware_1.userMiddleware, (req, res) => __awa
         return;
     }
     const hash = (0, util_1.random_Link_Generator_Function)(12);
-    yield database_1.linkModel.create({
+    yield database_2.linkModel.create({
         hash: hash,
         userId: req.id
     });
@@ -164,7 +169,7 @@ app.get("/api/v1/share/brain/:sharelink", (req, res) => __awaiter(void 0, void 0
     const hash = req.params.sharelink;
     const share = req.body.share;
     if (share) {
-        const findingKey = yield database_1.linkModel.findOne({
+        const findingKey = yield database_2.linkModel.findOne({
             hash: hash
         });
         if (!findingKey) {
@@ -174,10 +179,10 @@ app.get("/api/v1/share/brain/:sharelink", (req, res) => __awaiter(void 0, void 0
             return;
         }
         const userId = findingKey.userId;
-        const userdata = yield database_1.userModel.findOne({
+        const userdata = yield database_1.default.findOne({
             _id: userId
         });
-        const userContent = yield database_1.contentModel.findOne({
+        const userContent = yield database_2.contentModel.findOne({
             userId: userId
         });
         if (!userContent) {

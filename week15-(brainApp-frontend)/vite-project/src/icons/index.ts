@@ -1,5 +1,5 @@
 export interface iconProp{
-    size : "sm" | "md" | "lg",
+    size? : "sm" | "md" | "lg",
 }
   
 export const iconSizeVariant = {

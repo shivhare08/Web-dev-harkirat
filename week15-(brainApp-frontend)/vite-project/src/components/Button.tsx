@@ -1,19 +1,24 @@
 import { ReactElement } from "react"
+import CreateContentCreator from "./CreateContentModel"
 // type variantType = "primary" | "secondry";
 
 interface ButtonProps{
     //variant : variantType,
-    variant : "primary" | "secondry"
+    variant : "primary" | "secondry" | "dark" | "youtubeColor"
     size : "sm" | "md" | "lg",
     text : string,
     startIcon? : any,
     endIcon? : ReactElement,
-    onClick : ()=> void
+    onClick ?: ()=> void,
+    width?:string,
+    textPosition? : string
 }
 
 const variantStyles = {
     "primary" : "bg-purple-600 text-white",
-    "secondry" : "bg-purple-300 text-purple-600"
+    "secondry" : "bg-purple-300 text-purple-600",
+    "dark" : "bg-black text-white",
+    "youtubeColor" : "bg-red-500 text-white"
 }
 
 const sizeStyle = {
@@ -27,9 +32,11 @@ const defaultSize = "rounded-md"
 //     return <button></button>
 // } 
 
+
 export default function Button(props : ButtonProps){
+    
     return(
-        <button className={`${variantStyles[props.variant]} transition duration-500 hover:scale-105 ${defaultSize} ${sizeStyle[props.size]}`}>
+        <button onClick={props.onClick} className={`${variantStyles[props.variant]} ${props.textPosition} ${props.width} transition duration-500  ${defaultSize} ${sizeStyle[props.size]}`}>
             <div className="flex">
                 {props.startIcon?<p className="pr-1 pt-1">{props.startIcon}</p>:null}<p> {props.text}</p>
             </div>

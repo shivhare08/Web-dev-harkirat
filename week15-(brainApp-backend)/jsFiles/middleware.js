@@ -7,8 +7,9 @@ exports.userMiddleware = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = require("./config");
 const userMiddleware = (req, res, next) => {
-    const token = req.headers.token;
-    //const token = req.headers.["authorization"];
+    //const token = req.headers.token
+    const token = req.headers["authorization"];
+    //const token = req.headers.["Authorization"];
     const userVerification = jsonwebtoken_1.default.verify(token, config_1.jwt_screats);
     if (userVerification) {
         //@ts-ignore no need

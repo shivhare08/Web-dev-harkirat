@@ -8,12 +8,14 @@ const userSchema = new Schema({
     password : String
 })
 
-export const userModel = model('users',userSchema)
+const userModel = model('users',userSchema)
+export default userModel;
 
 const contentSchema = new Schema({
     title : String,
     link : String,
-    tags : [{type : mongoose.Types.ObjectId , ref : 'Tag'}],
+    type : String,
+    // tags : [{type : mongoose.Types.ObjectId , ref : 'Tag'}],
     userId : {type : mongoose.Types.ObjectId , ref : 'users'}   //this ref defines (users) user Model
 })
 
