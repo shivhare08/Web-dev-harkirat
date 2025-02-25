@@ -28,16 +28,12 @@ const sizeStyle = {
 }
 
 const defaultSize = "rounded-md"
-// export const Button =()=>{
-//     return <button></button>
-// } 
-
 
 export default function Button(props : ButtonProps){
     
     return(
         <button onClick={props.onClick} className={`${variantStyles[props.variant]} ${props.textPosition} ${props.width} transition duration-500  ${defaultSize} ${sizeStyle[props.size]}`}>
-            <div className="flex">
+            <div className="flex items-center">
                 {props.startIcon?<p className="pr-1 pt-1">{props.startIcon}</p>:null}<p> {props.text}</p>
             </div>
         </button>

@@ -133,6 +133,10 @@ app.get("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(
         // userDetails : userDetails.values(username)
     });
 }));
+app.post("/api/v1/content/delete", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.id;
+    const userContent = yield database_2.contentModel.find({ userId });
+}));
 app.delete("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const contentId = req.body.contentId;
     yield database_2.contentModel.deleteMany({
@@ -191,12 +195,22 @@ app.get("/api/v1/share/brain/:sharelink", (req, res) => __awaiter(void 0, void 0
             });
             return;
         }
+        res.send({
+            message: "user content",
+            content: {
+                username: userdata === null || userdata === void 0 ? void 0 : userdata.username,
+                title: userContent.title,
+                link: userContent.link,
+                type: userContent.type
+            }
+        });
         res.json({
             message: "user content",
             content: {
                 username: userdata === null || userdata === void 0 ? void 0 : userdata.username,
                 title: userContent.title,
-                link: userContent.link
+                link: userContent.link,
+                type: userContent.type
             }
         });
     }

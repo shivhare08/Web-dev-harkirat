@@ -23,8 +23,9 @@ export function useContent(){
 
         return ()=>{
             clearInterval(interval)
+            // clearInterval(interval)
         }
-    })
+    },[])
 
     return contents;
 }

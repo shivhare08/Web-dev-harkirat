@@ -39,14 +39,20 @@ export default function Signin() {
             </p>
             <div className="flex justify-center mt-16">
                 <div className="flex flex-col justify-center">
-                    <div className="w-80 h-56 bg-white rounded-md">
+                    <div className="w-80 h-60 bg-white rounded-md">
                         <p className="text-center font-semibold text-purple-800 text-xl mt-4 underline">Sign-in</p>
 
                         <div className="mt-3 px-4">
                             <Input reference={usernameReF} placeholder={"Username"} type={"text"} />
                             <Input reference={passwordRef} placeholder={"Password"} type={"password"} />
                             <Button onClickFun={signinFun}/>
+                            <div className="cursor-pointer text-purple-900" onClick={()=>{
+                                navigate("/signup")
+                            }}>
+                                don't have an account?
+                            </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>

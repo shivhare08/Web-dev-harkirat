@@ -5,11 +5,12 @@ import userModel from "./database";
 import {  contentModel, linkModel} from "./database";
 import { jwt_screats } from "./config";
 import { userMiddleware } from "./middleware";
-import zod from 'zod';
+import zod, { any } from 'zod';
 import bcrypt from 'bcrypt';
 import { local_url } from "./config";
 import { random_Link_Generator_Function } from "./util";
 import cors from "cors";
+
 
 
 const app = express();
@@ -141,6 +142,12 @@ app.get("/api/v1/content",userMiddleware,async (req,res)=>{
     })
 })
 
+app.post("/api/v1/content/delete",userMiddleware, async(req,res)=>{
+    const userId = req.id;
+    const userContent = await contentModel.find({userId});
+    
+})
+
 app.delete("/api/v1/content",userMiddleware,async (req,res)=>{
     const contentId = req.body.contentId
     await contentModel.deleteMany({
@@ -208,12 +215,22 @@ app.get("/api/v1/share/brain/:sharelink",async (req,res)=>{
             })
             return;
         }
+        res.send({
+            message : "user content",
+            content : {
+                username : userdata?.username,
+                title : userContent.title,
+                link : userContent.link,
+                type : userContent.type
+            }
+        })
         res.json({
             message : "user content",
             content : {
                 username : userdata?.username,
                 title : userContent.title,
-                link : userContent.link
+                link : userContent.link,
+                type : userContent.type
             }
         })
 

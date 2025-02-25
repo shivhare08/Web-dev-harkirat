@@ -1,3 +1,4 @@
+import axios from "axios";
 import { DeleteIcon } from "../icons/Delete";
 import { ShareIcon } from "../icons/Share";
 import { Tweetsicon } from "../icons/Tweet";
@@ -26,7 +27,13 @@ export default function Card({title , type , link} : CardProps){
                         <span>
                             <a href={link}><ShareIcon size={"md"}/></a>
                         </span>
-                        <span className="pl-1"><DeleteIcon size={"lg"}/></span>                        
+                        <span onClick={async ()=>{
+                            await axios.delete("http://localhost:2560/api/v1/content",{
+                                headers:{
+                                    "Authorization" : localStorage.getItem("token")
+                                }
+                            });
+                        }} className="pl-1"><DeleteIcon size={"lg"}/></span>                        
                     </div>
                 </div>
                 <div className="pt-3">

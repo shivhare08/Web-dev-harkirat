@@ -38,7 +38,7 @@ export default function Signup() {
             </p>
             <div className="flex justify-center mt-16">
                 <div className="flex flex-col justify-center">
-                    <div className="w-80 h-56 bg-white rounded-md">
+                    <div className="w-80 h-60 bg-white rounded-md">
                         <p className="text-center font-semibold text-purple-800 text-xl mt-4 underline">Sign-Up</p>
 
                         <div className="mt-3 px-4">
@@ -46,6 +46,11 @@ export default function Signup() {
                             <Input reference={passwordRef} placeholder={"Password"} type={"password"} />
                             {/* <Button onClick={signupFun} variant={"primary"} size={"md"} width="w-full" textPosition={"text-center"} text={"Signup"}/> */}
                             <Button onClickFun={signupFun}/>
+                            <div className="cursor-pointer text-purple-900" onClick={()=>{
+                                navigate("/signin")
+                            }}>
+                                already have an account?
+                            </div>
                         </div>
                     </div>
                 </div>
