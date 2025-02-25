@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Plusicon } from "../icons/Plusicon";
 import axios from "axios";
 import Button from "./Button";
+import { CrossIcon } from "../icons/CrossIcon";
 
 //by enum the person can put any thing in useState, only either youtube and twitter can be written...
 enum contenteType {
@@ -43,7 +44,7 @@ export default function CreateContentCreator({ open, onClose }: any) {
                     <div className="flex justify-between items-center">
                         <p className="text-xl font-medium text-gray-800">Your brain</p>
                         <div onClick={onClose} className="cursor-pointer">
-                            <Plusicon size="md" />
+                            <CrossIcon size="md" />
                         </div>
                     </div>
                     <div className="">

@@ -21,7 +21,6 @@ const config_1 = require("./config");
 const middleware_1 = require("./middleware");
 const zod_1 = __importDefault(require("zod"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const config_2 = require("./config");
 const util_1 = require("./util");
 const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
@@ -29,8 +28,9 @@ app.use((0, cors_1.default)());
 const port = 2560;
 app.use(express_1.default.json());
 function connectDB() {
+    mongoose_1.default.connect(config_1.live_url);
     // mongoose.connect("mongodb+srv://shashankismylife08:g9ymekSSe4H5Xmq1@cluster0.f3kq8.mongodb.net/brain-app")
-    mongoose_1.default.connect(config_2.local_url);
+    //mongoose.connect(local_url);
 }
 connectDB();
 app.post("/api/v1/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

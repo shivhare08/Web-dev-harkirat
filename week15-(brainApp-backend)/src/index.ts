@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import jwt from 'jsonwebtoken';
 import userModel from "./database";
 import {  contentModel, linkModel} from "./database";
-import { jwt_screats } from "./config";
+import { jwt_screats, live_url } from "./config";
 import { userMiddleware } from "./middleware";
 import zod, { any } from 'zod';
 import bcrypt from 'bcrypt';
@@ -28,8 +28,9 @@ declare global{
 }
 
 function connectDB(){
+    mongoose.connect(live_url);
     // mongoose.connect("mongodb+srv://shashankismylife08:g9ymekSSe4H5Xmq1@cluster0.f3kq8.mongodb.net/brain-app")
-    mongoose.connect(local_url);
+    //mongoose.connect(local_url);
 }
 
 connectDB();
