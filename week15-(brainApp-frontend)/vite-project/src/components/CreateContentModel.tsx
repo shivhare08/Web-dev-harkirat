@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Plusicon } from "../icons/Plusicon";
+
 import axios from "axios";
 import Button from "./Button";
 import { CrossIcon } from "../icons/CrossIcon";
@@ -20,10 +20,19 @@ export default function CreateContentCreator({ open, onClose }: any) {
     async function AddContent(){
         const title = titleref.current?.value;
         const link = linkref.current?.value;
-        // const typeOFcontent = type
 
+        // try{
+        //     await axios.post("http://localhost:2560/api/v1/content",{
+        //         title,
+        //         link,
+        //         type
+        //     },{
+        //         headers : {
+        //             "Authorization" : localStorage.getItem("token") //headers me authorization me token drha middleware me
+        //         }
+        //     })
         try{
-            await axios.post("http://localhost:2560/api/v1/content",{
+            await axios.post("https://mybrain-backend-h8my.onrender.com/api/v1/content",{
                 title,
                 link,
                 type
@@ -32,6 +41,8 @@ export default function CreateContentCreator({ open, onClose }: any) {
                     "Authorization" : localStorage.getItem("token") //headers me authorization me token drha middleware me
                 }
             })
+            console.log("done");
+            
         }catch(error){
             console.log(error);
         }
@@ -44,7 +55,7 @@ export default function CreateContentCreator({ open, onClose }: any) {
                     <div className="flex justify-between items-center">
                         <p className="text-xl font-medium text-gray-800">Your brain</p>
                         <div onClick={onClose} className="cursor-pointer">
-                            <CrossIcon size="md" />
+                            <CrossIcon/>
                         </div>
                     </div>
                     <div className="">

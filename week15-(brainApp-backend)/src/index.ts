@@ -6,7 +6,7 @@ import {  contentModel, linkModel} from "./database";
 import { jwt_screats, live_url } from "./config";
 import { userMiddleware } from "./middleware";
 import zod, { any } from 'zod';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { local_url } from "./config";
 import { random_Link_Generator_Function } from "./util";
 import cors from "cors";

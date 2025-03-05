@@ -2,9 +2,8 @@ import Sidebarcompitems from "./Sidebarcompitems";
 import { Tweetsicon } from "../icons/Tweet"
 import { Videoicon } from "../icons/Videoicon"
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import Button from "./Button";
-import axios from "axios";
+
 
 export default function Sidebar() {
     const navigate = useNavigate();
@@ -31,8 +30,8 @@ export default function Sidebar() {
                 </div>
                 <hr className="mt-3 w-full border border-1 border-gray-700"></hr>
                 <div className="flex justify-around sm:hidden p-3">
-                    <Sidebarcompitems onClick={switchingTwitter} startIcon={<Tweetsicon size={"md"} />} content={"Twitter"} size={"md"} />
-                    <Sidebarcompitems onClick={switchingYoutube} startIcon={<Videoicon size={"md"} />} content={"Youtube"} size={"md"} />
+                    <Sidebarcompitems onClick={switchingTwitter} startIcon={<Tweetsicon />} content={"Twitter"} size={"md"} />
+                    <Sidebarcompitems onClick={switchingYoutube} startIcon={<Videoicon/>} content={"Youtube"} size={"md"} />
                     {/* <Button text={"Logout"} variant=""/> */}
                 </div>
             </div>
@@ -50,8 +49,8 @@ export default function Sidebar() {
                 </p>
                 <hr className="mt-3 border border-1 border-gray-700"></hr>
                 <div className="min-h-full p-5">
-                    <Sidebarcompitems onClick={switchingTwitter} startIcon={<Tweetsicon size={"md"} />} content={"Twitter"} size={"md"} />
-                    <Sidebarcompitems onClick={switchingYoutube} startIcon={<Videoicon size={"md"} />} content={"Youtube"} size={"md"} />
+                    <Sidebarcompitems onClick={switchingTwitter} startIcon={<Tweetsicon />} content={"Twitter"} size={"md"} />
+                    <Sidebarcompitems onClick={switchingYoutube} startIcon={<Videoicon  />} content={"Youtube"} size={"md"} />
                     <div onClick={() => {
                         try {
                             localStorage.removeItem("token")

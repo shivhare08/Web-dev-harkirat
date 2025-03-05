@@ -1,7 +1,5 @@
-import React, { useRef } from "react"
-import { Plusicon } from "../icons/Plusicon"
+import { useRef } from "react"
 import axios from "axios";
-import { BACKEND_URL } from "../Config";
 import { useNavigate } from "react-router-dom";
 // import Button from "../components/Button";
 
@@ -16,10 +14,14 @@ export default function Signup() {
         const username = usernameRef.current?.value;
         const password = passwordRef.current?.value;
 
-        await axios.post("http://localhost:2560/api/v1/signup",{
+        await axios.post("https://mybrain-backend-h8my.onrender.com/api/v1/signup",{
             username,
             password
         })
+        // await axios.post("http://localhost:2560/api/v1/signup",{
+        //     username,
+        //     password
+        // })
         alert("you have sigined up")
         navigate("/signin")
 

@@ -15,30 +15,34 @@ export default function Card({title , type , link} : CardProps){
                 <div className="flex justify-between">
                     <div className="flex items-center ">
                         <span className="text-gray-600">
-                            {type==="youtube" && <Videoicon size={"lg"}/>}
-                            {type==="twitter" && <Tweetsicon size={"lg"}/>}
+                            {type==="youtube" && <Videoicon />}
+                            {type==="twitter" && <Tweetsicon />}
                         </span>
                         <span className="px-1">
                             {title}
                         </span>
-                    </div>
+                    </div>                    
 
                     <div className="flex items-center text-gray-600">
                         <span>
-                            <a href={link}><ShareIcon size={"md"}/></a>
+                            <a href={link}><ShareIcon/></a>
                         </span>
                         <span onClick={async ()=>{
-                            await axios.delete("http://localhost:2560/api/v1/content",{
+                            // await axios.delete("http://localhost:2560/api/v1/content",{
+                            //     headers:{
+                            //         "Authorization" : localStorage.getItem("token")
+                            //     }
+                            // });
+                            await axios.delete("https://mybrain-backend-h8my.onrender.com/api/v1/content",{
                                 headers:{
                                     "Authorization" : localStorage.getItem("token")
                                 }
                             });
-                        }} className="pl-1"><DeleteIcon size={"lg"}/></span>                        
+                        }} className="pl-1"><DeleteIcon/></span>                        
                     </div>
                 </div>
                 <div className="pt-3">
                     {type==="youtube" && <iframe className="w-full rounded-md" src={link.replace("watch","embed").replace("?v=","/")} title="YouTube video player"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin"></iframe>}
-
                     {type==="twitter" && <blockquote className="twitter-tweet">
                     <a href={link.replace("x.com", "twitter.com")}></a> 
                     </blockquote>}

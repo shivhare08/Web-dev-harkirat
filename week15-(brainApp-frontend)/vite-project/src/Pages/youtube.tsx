@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useContent } from "../hooks/useContent";
+
+import  useContent  from "../hooks/useContent";
 import Card from "../components/Card";
 import { useNavigate } from "react-router-dom";
 

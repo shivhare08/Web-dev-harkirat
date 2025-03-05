@@ -1,5 +1,4 @@
 import { ReactElement } from "react"
-import CreateContentCreator from "./CreateContentModel"
 // type variantType = "primary" | "secondry";
 
 interface ButtonProps{

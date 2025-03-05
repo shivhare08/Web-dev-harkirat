@@ -20,7 +20,7 @@ const database_2 = require("./database");
 const config_1 = require("./config");
 const middleware_1 = require("./middleware");
 const zod_1 = __importDefault(require("zod"));
-const bcrypt_1 = __importDefault(require("bcrypt"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const util_1 = require("./util");
 const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
@@ -43,7 +43,7 @@ app.post("/api/v1/signup", (req, res) => __awaiter(void 0, void 0, void 0, funct
         });
         const parseData = zodVerification.safeParse(req.body);
         if (parseData.success) {
-            const hashPassword = yield bcrypt_1.default.hash(password, 8);
+            const hashPassword = yield bcryptjs_1.default.hash(password, 8);
             const createData = yield database_1.default.create({
                 username: username,
                 password: hashPassword
@@ -80,7 +80,7 @@ app.post("/api/v1/signin", (req, res) => __awaiter(void 0, void 0, void 0, funct
             });
             return;
         }
-        const matchPassword = yield bcrypt_1.default.compare(password, isusernameMatch.password);
+        const matchPassword = yield bcryptjs_1.default.compare(password, isusernameMatch.password);
         if (matchPassword) {
             const token = yield jsonwebtoken_1.default.sign({
                 id: isusernameMatch._id

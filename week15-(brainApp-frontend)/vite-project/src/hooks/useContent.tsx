@@ -1,13 +1,18 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export function useContent(){
+export default function useContent(){
     const [contents , setContents] = useState([]);
 
     function refresh(){
-        axios.get("http://localhost:2560/api/v1/content",{
-            headers :{
-                "Authorization" : localStorage.getItem("token")
+        // axios.get("http://localhost:2560/api/v1/content",{
+        //     headers :{
+        //         "Authorization" : localStorage.getItem("token")
+        //     }
+        // })
+        axios.get("https://mybrain-backend-h8my.onrender.com/api/v1/content",{
+            headers:{
+                "Authorization":localStorage.getItem("token")
             }
         })
         .then((response)=>{

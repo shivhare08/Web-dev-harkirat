@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Card from "../components/Card";
-import { useContent } from "../hooks/useContent";
+import useContent from "../hooks/useContent";
 
 export default function Twitter() {
     const contents = useContent();
